@@ -6,7 +6,7 @@
     method="GET"
     for="zope.interface.Interface"
     factory=".get.ActionsGet"
-    name="actions_"
+    name="@actions"
     permission="zope2.View"
     />
 

@@ -6,7 +6,7 @@
     method="GET"
     for="zope.interface.Interface"
     factory=".get.ComponentsGet"
-    name="components_"
+    name="@components"
     permission="zope2.View"
     />
 

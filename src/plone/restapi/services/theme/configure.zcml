@@ -6,7 +6,7 @@
     method="GET"
     for="Products.CMFPlone.interfaces.IPloneSiteRoot"
     factory=".get.ThemeEditedResource"
-    name="theme_"
+    name="@theme"
     permission="zope2.View"
     />
 

@@ -6,7 +6,7 @@
     method="POST"
     for="zope.interface.Interface"
     factory=".Login"
-    name="login_"
+    name="@login"
     permission="zope2.View"
     />
 
@@ -14,7 +14,7 @@
     method="POST"
     for="zope.interface.Interface"
     factory=".Logout"
-    name="logout_"
+    name="@logout"
     permission="zope2.View"
     />
 
