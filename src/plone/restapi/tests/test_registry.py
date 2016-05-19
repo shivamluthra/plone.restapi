@@ -34,18 +34,36 @@ class TestRegistry(unittest.TestCase):
         transaction.commit()
 
     def test_get_registry_record(self):
-
-        transaction.commit()
-
-        response = self.api_session.get('/registry_/foo.bar')
+        response = self.api_session.get('/@registry/foo.bar')
 
         self.assertEqual(response.status_code, 200)
         self.assertEqual(response.json(), 'Lorem Ipsum')
 
     def test_update_registry_record(self):
         registry = getUtility(IRegistry)
-        payload = {'foo.bar': 'Lorem Ipsum'}
-        response = self.api_session.put('/registry_', json=payload)
+        payload = {'foo.bar': 'lorem ipsum'}
+        response = self.api_session.patch('/@registry', json=payload)
+        transaction.commit()
 
         self.assertEqual(response.status_code, 204)
-        self.assertEqual(registry['foo.bar'], 'Lorem Ipsum')
+        self.assertEqual(registry['foo.bar'], 'lorem ipsum')
+
+    def test_update_several_registry_records(self):
+        registry = getUtility(IRegistry)
+        record = Record(field.TextLine(title=u"Foo Bar Baz"),
+                        u"Lorem Ipsum Dolor")
+        registry.records['foo.bar.baz'] = record
+        transaction.commit()
+        payload = {'foo.bar': 'lorem ipsum',
+                   'foo.bar.baz': 'lorem ipsum dolor'}
+        response = self.api_session.patch('/@registry', json=payload)
+        transaction.commit()
+
+        self.assertEqual(response.status_code, 204)
+        self.assertEqual(registry['foo.bar'], 'lorem ipsum')
+        self.assertEqual(registry['foo.bar.baz'], 'lorem ipsum dolor')
+
+    def test_update_non_existing_registry_record(self):
+        payload = {'foo.bar.baz': 'lorem ipsum'}
+        response = self.api_session.patch('/@registry', json=payload)
+        self.assertEqual(response.status_code, 500)

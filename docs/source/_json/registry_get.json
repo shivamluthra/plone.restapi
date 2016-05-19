@@ -1,4 +1,4 @@
-GET /plone/registry_/plone.app.querystring.field.path.title
+GET /plone/@registry/plone.app.querystring.field.path.title
 Accept: application/json
 
 HTTP 200 OK

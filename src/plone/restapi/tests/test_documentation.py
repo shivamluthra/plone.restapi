@@ -277,57 +277,34 @@ class TestTraversal(unittest.TestCase):
 
     def test_documentation_search(self):
         query = {'sort_on': 'path'}
-        response = self.api_session.get('/search', params=query)
+        response = self.api_session.get('/@search', params=query)
         save_response_for_documentation('search.json', response)
 
     def test_documentation_workflow(self):
         response = self.api_session.get(
-            '{}/workflow'.format(self.document.absolute_url()))
+            '{}/@workflow'.format(self.document.absolute_url()))
         save_response_for_documentation('workflow_get.json', response)
 
     def test_documentation_workflow_transition(self):
         response = self.api_session.post(
-            '{}/workflow/publish'.format(self.document.absolute_url()))
+            '{}/@workflow/publish'.format(self.document.absolute_url()))
         save_response_for_documentation('workflow_post.json', response)
 
     def test_documentation_registry_get(self):
         response = self.api_session.get(
-            '/registry_/plone.app.querystring.field.path.title')
+            '/@registry/plone.app.querystring.field.path.title')
         save_response_for_documentation('registry_get.json', response)
 
     def test_documentation_registry_update(self):
-        response = self.api_session.put(
-            '/registry_/',
+        response = self.api_session.patch(
+            '/@registry/',
             json={'plone.app.querystring.field.path.title': 'Value'})
         save_response_for_documentation('registry_update.json', response)
 
-    def test_documentation_theme(self):
-        query = {'resource': '/style/main.css'}
-        response = self.api_session.get('/theme_', params=query)
-        save_response_for_documentation('theme.json', response)
+    def test_documentation_types(self):
+        response = self.api_session.get('/@types')
+        save_response_for_documentation('types.json', response)
 
-    def test_documentation_components_navigation(self):
-        response = self.api_session.get('/components_/navigation')
-        save_response_for_documentation(
-            'components_navigation.json', response)
-
-    def test_documentation_components_breadcrumbs(self):
-        response = self.api_session.get('/front-page/components_/breadcrumbs')
-        save_response_for_documentation(
-            'components_breadcrumbs.json', response)
-
-    def test_documentation_actions(self):
-        response = self.api_session.get('/actions_')
-        save_response_for_documentation('actions.json', response)
-
-    def test_documentation_frame_object(self):
-        response = self.api_session.get(
-            self.document.absolute_url() + '?frame=object')
-        save_response_for_documentation('frame_object.json', response)
-
-    def test_documentation_login(self):
-        response = self.api_session.post('/login_', data=json.dumps({
-            'username': 'admin',
-            'password': 'admin'
-        }))
-        save_response_for_documentation('login.json', response)
+    def test_documentation_types_document(self):
+        response = self.api_session.get('@types/Document')
+        save_response_for_documentation('types_document.json', response)

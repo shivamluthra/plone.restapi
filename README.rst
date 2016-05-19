@@ -25,7 +25,7 @@ plone.restapi is a RESTful hypermedia API for Plone.
 RESTful Hypermedia API
 ----------------------
 
-REST stands for `Representational State Transfer`_. It is a software architectural principle to create loosely coupled web APIs.
+REST stands for `Representational State Transfer <http://en.wikipedia.org/wiki/Representational_state_transfer>`_. It is a software architectural principle to create loosely coupled web APIs.
 
 Most web APIs have a tight coupling between client and server. This makes them brittle and hard to change over time. It requires them not only to fully document every small detail of the API, but also write a client implementation that follows that specification 100% and breaks as soon as you change any detail.
 
@@ -47,9 +47,10 @@ https://github.com/plone/plone.restapi/milestones
 Live Demo
 =========
 
-Heroku live demo:: http://stormy-headland-44390.herokuapp.com/Plone/@@json
+Heroku live demo:: http://stormy-headland-44390.herokuapp.com/Plone/
 
-.. note:: The demo works best with a browser plugin that makes json links clickable in the browser (e.g. https://addons.mozilla.org/de/firefox/addon/jsonview/).
+.. note:: You will need some kind of API browser application to explore the API. 
+          We recommend to use `Postman <http://www.getpostman.com/>`_.
 
 
 Design Decisions
@@ -73,22 +74,17 @@ Software Quality
 Further Reading
 ===============
 
-* `REST in Practice: Hypermedia and Systems Architecture (Webber, Parastatidis, Robinson)`_
-
-
-.. _`Representational State Transfer`: http://en.wikipedia.org/wiki/Representational_state_transfer
-
-.. _`REST in Practice: Hypermedia and Systems Architecture (Webber, Parastatidis, Robinson)`: http://www.amazon.com/gp/product/0596805829
+* `REST in Practice: Hypermedia and Systems Architecture (Webber, Parastatidis, Robinson) <http://www.amazon.com/gp/product/0596805829>`_
 
 Standards
 =========
 
-- JSON-LD: http://www.w3.org/TR/json-ld/
-- JSON Schema: http://json-schema.org/
-- Schema.org: http://schema.org/
-- Hydra: http://www.w3.org/ns/hydra/spec/latest/core/
-- Collection+JSON: http://amundsen.com/media-types/collection/
-- Siren: https://github.com/kevinswiber/siren
+- `JSON-LD <http://www.w3.org/TR/json-ld/>`_
+- `JSON Schema <http://json-schema.org/>`_
+- `Schema.org <http://schema.org/>`_
+- `Hydra <http://www.w3.org/ns/hydra/spec/latest/core/>`_
+- `Collection+JSON <http://amundsen.com/media-types/collection/>`_
+- `Siren <https://github.com/kevinswiber/siren>`_
 
 License
 =======

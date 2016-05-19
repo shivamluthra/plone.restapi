@@ -15,7 +15,7 @@ class RegistryGet(Service):
         self.params = []
 
     def publishTraverse(self, request, name):
-        # Consume any path segments after /_registry as parameters
+        # Consume any path segments after /@registry as parameters
         self.params.append(name)
         return self
 

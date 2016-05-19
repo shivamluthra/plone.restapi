@@ -3,7 +3,9 @@
 
   <include package=".content"/>
   <include package=".search"/>
+  <include package=".types"/>
   <include package=".workflow"/>
+  <include package=".registry"/>
 
   <!-- Mocked Endpoints -->
   <include package=".registry" />
