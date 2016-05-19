@@ -12,48 +12,6 @@ These are mocked endpoints for use during the Barcelona 2016 Sprint.
    not intended for actual use, but instead serve as a skeleton to flesh out
    different aspects of the API during the Barcelona 2016 sprint.
 
-
-Registry
-========
-
-Registry records can be addressed by using the fully qualified dotted name of
-the registry record to be read/written as the ``:name`` parameter.
-
-Reading registry records
-------------------------
-
-Reading a single record:
-
-.. code::
-
-  GET /:portal/registry_/:name HTTP/1.1
-  Host: localhost:8080
-  Accept: application/json
-
-Example:
-
-.. literalinclude:: _json/registry_get.json
-   :language: js
-
-Updating registry records
--------------------------
-
-Updating an existing record:
-
-.. code::
-
-  PUT /:portal/registry_/ HTTP/1.1
-  Host: localhost:8080
-  Accept: application/json
-
-  {name: value}
-
-Example:
-
-.. literalinclude:: _json/registry_update.json
-   :language: js
-
-
 Theme
 ========
 
@@ -62,7 +20,7 @@ Requesting for overridden resources
 
 .. code::
 
-  GET /:portal/theme_ HTTP/1.1
+  GET /:portal/@theme HTTP/1.1
   Host: localhost:8080
   Accept: application/json
 
@@ -80,7 +38,7 @@ Get the required component(s)
 
 .. code::
 
- GET /:portal/components_/:[id,] HTTP/1.1
+ GET /:portal/@components/:[id,] HTTP/1.1
  Host: localhost:8080
  Accept: application/json
 
@@ -102,7 +60,7 @@ Get the available actions for the given context
 
 .. code::
 
- GET /:path/actions_ HTTP/1.1
+ GET /:path/@actions HTTP/1.1
  Host: localhost:8080
  Accept: application/json
 
@@ -135,7 +93,7 @@ Login
 
 .. code::
 
- POST /:path/login_ HTTP/1.1
+ POST /:path/@login HTTP/1.1
  Host: localhost:8080
  Accept: application/json
 

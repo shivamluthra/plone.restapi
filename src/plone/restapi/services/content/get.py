@@ -34,11 +34,10 @@ class ContentGet(Service):
         context_url = self.context.absolute_url()
 
         doc['template'] = 'index'
-        doc['versions'] = {'@id': '/'.join((context_url, 'versions_/'))}
-        doc['workflow'] = {'@id': '/'.join((context_url, 'workflow_/'))}
-        doc['actions'] = {'@id': '/'.join((context_url, 'actions_/'))}
+        doc['versions'] = {'@id': '/'.join((context_url, '@versions/'))}
+        doc['workflow'] = {'@id': '/'.join((context_url, '@workflow/'))}
+        doc['actions'] = {'@id': '/'.join((context_url, '@actions/'))}
 
-        doc['@context'] = serialized_content.pop('@context')
         doc['@id'] = serialized_content.pop('@id')
         doc['@type'] = serialized_content.pop('@type')
 

@@ -1,4 +1,4 @@
-GET /plone/actions_
+GET /plone/@actions
 Accept: application/json
 
 HTTP 200 OK

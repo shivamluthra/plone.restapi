@@ -1,4 +1,4 @@
-GET /plone/theme_?resource=%2Fstyle%2Fmain.css
+GET /plone/@theme?resource=%2Fstyle%2Fmain.css
 Accept: application/json
 
 HTTP 200 OK

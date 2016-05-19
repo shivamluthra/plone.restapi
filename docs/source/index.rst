@@ -24,6 +24,7 @@ Contents
    searching
    content-negotiation
    types
+   additional-endpoints
    customization
 
 .. include:: ../../README.rst

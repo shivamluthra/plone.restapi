@@ -1,4 +1,4 @@
-GET /plone/components_/navigation
+GET /plone/@components/navigation
 Accept: application/json
 
 HTTP 200 OK
@@ -9,12 +9,16 @@ content-type: application/json
     "data": {
       "items": [
         {
-          "title": "News", 
-          "url": "http://plone/news"
+          "title": "Home", 
+          "url": "http://localhost:55001/plone"
         }, 
         {
-          "title": "Events", 
-          "url": "http://plone/events"
+          "title": "Test Folder", 
+          "url": "http://localhost:55001/plone/robot-test-folder"
+        }, 
+        {
+          "title": "Welcome to Plone", 
+          "url": "http://localhost:55001/plone/front-page"
         }
       ]
     }, 

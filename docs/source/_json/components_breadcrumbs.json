@@ -1,4 +1,4 @@
-GET /plone/front-page/components_/breadcrumbs
+GET /plone/front-page/@components/breadcrumbs
 Accept: application/json
 
 HTTP 200 OK
