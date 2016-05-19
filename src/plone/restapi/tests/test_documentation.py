@@ -16,7 +16,6 @@ from z3c.relationfield import RelationValue
 from zope.component import getUtility
 from zope.intid.interfaces import IIntIds
 
-import json
 import os
 import unittest2 as unittest
 
