@@ -1,10 +1,10 @@
-.. include:: /alert-noindex.rst
-
 Registry
 ========
 
 Registry records can be addressed by using the fully qualified dotted name of
 the registry record to be read/written as the ``:name`` parameter.
+
+Reading or writing registry records requires the ``cmf.ManagePortal`` permission.
 
 Reading registry records
 ------------------------
