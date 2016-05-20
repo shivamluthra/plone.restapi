@@ -1,5 +1,5 @@
 # -*- coding: utf-8 -*-
-from plone.rest import Service
+from plone.restapi.services import Service
 from zope.component import getMultiAdapter
 from zope.interface import implements
 from zope.publisher.interfaces import IPublishTraverse
@@ -66,7 +66,7 @@ class ComponentsGet(Service):
 
         return self._frame_component_items(items, component_id)
 
-    def render(self):
+    def reply(self):
         components = []
         for component_id in self._component_ids:
             components.append(self._render_component(component_id))

@@ -1,5 +1,5 @@
 # -*- coding: utf-8 -*-
-from plone.rest import Service
+from plone.restapi.services import Service
 from zope.interface import implements
 from zope.publisher.interfaces import IPublishTraverse
 import jwt
@@ -13,7 +13,7 @@ class Login(Service):
 
     implements(IPublishTraverse)
 
-    def render(self):
+    def reply(self):
         data = {
             'algorithm': 'HS256',
             'type': 'JWT',
@@ -30,7 +30,7 @@ class Login(Service):
 class Logout(Service):
     implements(IPublishTraverse)
 
-    def render(self):
+    def reply(self):
         # doing nothing right now
         return {
             'success': True

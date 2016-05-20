@@ -1,5 +1,5 @@
 # -*- coding: utf-8 -*-
-from plone.rest import Service
+from plone.restapi.services import Service
 from zope.interface import implements
 from zope.publisher.interfaces import IPublishTraverse
 
@@ -32,5 +32,5 @@ class ActionsGet(Service):
 
     implements(IPublishTraverse)
 
-    def render(self):
+    def reply(self):
         return MOCKEDRESPONSE
