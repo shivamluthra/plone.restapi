@@ -18,6 +18,7 @@ install:
 script:
   - bin/code-analysis
   - bin/test
+  - bin/test-no-uncommited-doc-changes
 after_success:
   - bin/test-coverage
   - bin/createcoverage

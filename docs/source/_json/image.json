@@ -1,6 +1,10 @@
 GET /plone/image
 Accept: application/json
 
+Change to test whether the bin/test-no-uncommited-doc-changes script
+is working as intended on Travis CI, and how the resulting Travis build
+log looks.
+
 HTTP 200 OK
 content-type: application/json
 
@@ -17,6 +21,7 @@ content-type: application/json
   ], 
   "description": "This is an image", 
   "effective": null, 
+  "key_that_has_been_removed": null, 
   "exclude_from_nav": false, 
   "expires": null, 
   "image": {
