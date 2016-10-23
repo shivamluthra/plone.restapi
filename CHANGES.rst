@@ -6,6 +6,9 @@ Changelog
 
 New Features:
 
+- Add support for expandable elements.
+  [buchi]
+
 - Introduce dedicated permission required to use REST API at all
   (assigned to everybody by default).
   [lgraf]
