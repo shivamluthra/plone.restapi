@@ -6,6 +6,9 @@ content-type: application/json
 
 {
   "@components": {
+    "breadcrumbs": {
+      "@id": "http://localhost:55001/plone/@components/breadcrumbs"
+    }, 
     "navigation": {
       "@id": "http://localhost:55001/plone/@components/navigation"
     }
