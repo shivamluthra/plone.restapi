@@ -9,6 +9,11 @@ New Features:
 - Add simple user search capabilities in the GET @users endpoint.
   [sneridagh]
 
+Bugfixes:
+
+- Prevent duplicate calls when we get filename from at file field value.
+  [thomasdesvenain]
+
 
 1.0a7 (2016-12-05)
 ------------------
