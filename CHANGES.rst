@@ -1,7 +1,41 @@
 Changelog
 =========
 
-1.0a6 (unreleased)
+1.0a9 (unreleased)
+------------------
+
+Bugfixes:
+
+- Fix queries to ensure ordering of container items by getObjectPositionInParent.
+  [lgraf]
+
+
+1.0a8 (2017-01-12)
+------------------
+
+New Features:
+
+- Add simple user search capabilities in the GET @users endpoint.
+  [sneridagh]
+
+Bugfixes:
+
+- Allow installation of plone.restapi if JWT plugin already exists. This fixes
+  https://github.com/plone/plone.restapi/issues/119.
+  [buchi]
+
+
+1.0a7 (2016-12-05)
+------------------
+
+Bugfixes:
+
+- Make login endpoint accessible without UseRESTAPI permission. This fixes
+  https://github.com/plone/plone.restapi/issues/166.
+  [buchi]
+
+
+1.0a6 (2016-11-30)
 ------------------
 
 New Features:
@@ -96,4 +130,3 @@ Bugfixes:
 
 - Initial release.
   [timo,buchi,lukasgraf,et al.]
-

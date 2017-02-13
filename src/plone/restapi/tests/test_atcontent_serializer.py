@@ -126,3 +126,32 @@ class TestATContentSerializer(unittest.TestCase):
         obj = self.serialize(self.doc1)
         self.assertIn('foo', obj)
         self.assertEqual('collapsed', obj['foo'])
+
+    def test_serializer_orders_folder_items_by_get_object_position_in_parent(self):  # noqa
+        folder = self.portal[self.portal.invokeFactory(
+            'ATTestFolder', id='folder', title='Test Folder')]
+        folder.invokeFactory('ATTestDocument', id='doc1', title='A Document')
+        folder.invokeFactory('ATTestDocument', id='doc2', title='Second doc')
+
+        # Change GOPIP (getObjectPositionInParent) based order
+        folder.moveObjectsUp('doc2')
+
+        obj = self.serialize(folder)
+
+        self.assertIn('items', obj)
+        self.assertEqual(
+            obj['items'],
+            [
+                {
+                    '@id': 'http://nohost/plone/folder/doc2',
+                    '@type': 'ATTestDocument',
+                    'description': '',
+                    'title': u'Second doc',
+                },
+                {
+                    '@id': 'http://nohost/plone/folder/doc1',
+                    '@type': 'ATTestDocument',
+                    'description': '',
+                    'title': u'A Document',
+                },
+            ])
