@@ -24,6 +24,7 @@ Contents
    content
    batching
    workflow
+   sharing
    registry
    types
    users

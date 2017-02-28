@@ -9,6 +9,9 @@ New Features:
 - Add reset-password action to the user endpoint.
   [timo,csenger]
 
+- Add @sharing endpoint and add it as a link to the content GET handler.
+  [csenger]
+
 - Make date and datetime fields provide a 'widget' attribute.
   [timo]
 
