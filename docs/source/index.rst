@@ -30,6 +30,7 @@ Contents
    components
    serialization
    searching
+   vocabularies
    customization
 
 .. include:: ../../README.rst
