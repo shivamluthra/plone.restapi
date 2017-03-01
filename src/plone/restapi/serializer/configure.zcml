@@ -64,4 +64,7 @@
              name="local_roles"
              />
     
+    <adapter factory=".vocabularies.SerializeVocabularyToJson" />
+    <adapter factory=".vocabularies.SerializeTermToJson" />
+
 </configure>
