@@ -104,23 +104,8 @@ class TestTraversal(unittest.TestCase):
         self.api_session.auth = (SITE_OWNER_NAME, SITE_OWNER_PASSWORD)
 
         setRoles(self.portal, TEST_USER_ID, ['Manager'])
-        self.portal.invokeFactory('Document', id='front-page')
-        self.document = self.portal['front-page']
-        self.document.title = u"Welcome to Plone"
-        self.document.description = \
-            u"Congratulations! You have successfully installed Plone."
-        self.document.text = RichTextValue(
-            u"If you're seeing this instead of the web site you were " +
-            u"expecting, the owner of this web site has just installed " +
-            u"Plone. Do not contact the Plone Team or the Plone mailing " +
-            u"lists about this.",
-            'text/plain',
-            'text/html'
-        )
-        self.document.creation_date = DateTime('2016-01-21T01:14:48+00:00')
-        IMutableUUID(self.document).set('1f699ffa110e45afb1ba502f75f7ec33')
-        self.document.reindexObject()
-        self.document.modification_date = DateTime('2016-01-21T01:24:11+00:00')
+        self.document = self.create_document()
+
         import transaction
         transaction.commit()
         self.browser = Browser(self.app)
@@ -129,6 +114,49 @@ class TestTraversal(unittest.TestCase):
             'Authorization',
             'Basic %s:%s' % (SITE_OWNER_NAME, SITE_OWNER_PASSWORD,)
         )
+
+    def create_document(self):
+        self.portal.invokeFactory('Document', id='front-page')
+        document = self.portal['front-page']
+        document.title = u"Welcome to Plone"
+        document.description = \
+            u"Congratulations! You have successfully installed Plone."
+        document.text = RichTextValue(
+            u"If you're seeing this instead of the web site you were " +
+            u"expecting, the owner of this web site has just installed " +
+            u"Plone. Do not contact the Plone Team or the Plone mailing " +
+            u"lists about this.",
+            'text/plain',
+            'text/html'
+        )
+        document.creation_date = DateTime('2016-01-21T01:14:48+00:00')
+        IMutableUUID(document).set('1f699ffa110e45afb1ba502f75f7ec33')
+        document.reindexObject()
+        document.modification_date = DateTime('2016-01-21T01:24:11+00:00')
+        return document
+
+    def create_folder(self):
+        self.portal.invokeFactory('Folder', id='folder')
+        folder = self.portal['folder']
+        folder.title = 'My Folder'
+        folder.description = u'This is a folder with two documents'
+        folder.invokeFactory(
+            'Document',
+            id='doc1',
+            title='A document within a folder'
+        )
+        folder.invokeFactory(
+            'Document',
+            id='doc2',
+            title='A document within a folder'
+        )
+        folder.creation_date = DateTime(
+            '2016-01-21T07:14:48+00:00')
+        folder.modification_date = DateTime(
+            '2016-01-21T07:24:11+00:00')
+        IMutableUUID(folder).set(
+            'fc7881c46d61452db4177bc059d9dcb5')
+        return folder
 
     def tearDown(self):
         self.time_freezer.stop()
@@ -234,28 +262,10 @@ class TestTraversal(unittest.TestCase):
         save_request_and_response_for_docs('image', response)
 
     def test_documentation_folder(self):
-        self.portal.invokeFactory('Folder', id='folder')
-        self.portal.folder.title = 'My Folder'
-        self.portal.folder.description = u'This is a folder with two documents'
-        self.portal.folder.invokeFactory(
-            'Document',
-            id='doc1',
-            title='A document within a folder'
-        )
-        self.portal.folder.invokeFactory(
-            'Document',
-            id='doc2',
-            title='A document within a folder'
-        )
-        self.portal.folder.creation_date = DateTime(
-            '2016-01-21T07:14:48+00:00')
-        self.portal.folder.modification_date = DateTime(
-            '2016-01-21T07:24:11+00:00')
-        IMutableUUID(self.portal.folder).set(
-            'fc7881c46d61452db4177bc059d9dcb5')
+        folder = self.create_folder()
         import transaction
         transaction.commit()
-        response = self.api_session.get(self.portal.folder.absolute_url())
+        response = self.api_session.get(folder.absolute_url())
         save_request_and_response_for_docs('folder', response)
 
     def test_documentation_collection(self):
