@@ -33,6 +33,7 @@ Contents
    searching
    vocabularies
    customization
+   conventions
 
 .. include:: ../../README.rst
 
