@@ -5,16 +5,34 @@ Changelog
 -------------------
 
 New Features:
-- Added 'addable' to @types endpoint. It specifies if the content type can be added to the current context.
-  Refs https://github.com/plone/plone.restapi/issues/173
+
+- Implement @copy and @move endpoints.
+  [buchi]
+
+- Docs: Use sphinxcontrib-httpexample and convert existing examples.
+  [lgraf]
+
+- Added 'addable' to @types endpoint. It specifies if the content type can be
+  added to the current context. See https://github.com/plone/plone.restapi/issues/173
   [jaroel]
 
-- Added support for named IJsonSchemaProvider adapter to target a single field in a schema.
-  This allows us to prevent rendering all choices in relatedItems.
-  Refs https://github.com/plone/plone.restapi/issues/199
+- Added support for named IJsonSchemaProvider adapter to target a single
+  field in a schema. This allows us to prevent rendering all choices in
+  relatedItems. See https://github.com/plone/plone.restapi/issues/199
   [jaroel]
+
+- Add review_state to the folderish summary serializer.
+  [sneridagh]
+
+- Add new @principals endpoint. It searches for principals and returns a list
+  of users and groups that matches the query. This is aimed to be used in the
+  sharing UI widget or other user/groups search widgets.
+  [sneridagh]
 
 Bugfixes:
+
+- Return correct @id for folderish objects created via POST.
+  [lgraf]
 
 - Fix timezone-related failures when running tests through `coverage`.
   [witsch]
@@ -31,10 +49,6 @@ Bugfixes:
 - Add missing id to the Plone site serialization, related to issue #186
   [sneridagh]
 
-New Features:
-
-- Add review_state to the folderish summary serializer.
-  [sneridagh]
 
 1.0a9 (2017-03-03)
 ------------------
