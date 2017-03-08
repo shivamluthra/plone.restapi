@@ -1,0 +1,32 @@
+<configure
+    xmlns="http://namespaces.zope.org/zope"
+    xmlns:plone="http://namespaces.plone.org/plone"
+    xmlns:zcml="http://namespaces.zope.org/zcml">
+
+  <plone:service
+    method="GET"
+    name="@routerDemo"
+    for="Products.CMFCore.interfaces.ISiteRoot"
+    factory=".demo.DemoRouter"
+    permission="cmf.ManagePortal"
+    />
+
+  <plone:service
+    method="GET"
+    name="users/foo/info"
+    for="Products.CMFCore.interfaces.ISiteRoot"
+    router=".demo.IDemoRouter"
+    factory=".demo.DemoGet"
+    permission="cmf.ManagePortal"
+    />
+
+  <plone:service
+    method="GET"
+    name="users"
+    for="Products.CMFCore.interfaces.ISiteRoot"
+    router=".demo.IDemoRouter"
+    factory=".demo.DemoList"
+    permission="cmf.ManagePortal"
+    />
+
+</configure>

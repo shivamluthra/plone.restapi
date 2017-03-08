@@ -1,5 +1,6 @@
 # -*- coding: utf-8 -*-
 from Products.CMFCore.utils import getToolByName
+from Products.MailHost.interfaces import IMailHost
 
 from plone import api
 from plone.app.testing import setRoles
@@ -9,6 +10,7 @@ from plone.app.testing import TEST_USER_ID
 from plone.restapi.testing import PLONE_RESTAPI_DX_FUNCTIONAL_TESTING
 from plone.restapi.testing import RelativeSession
 from zope.component import getAdapter
+from zope.component import getUtility
 
 try:
     from Products.CMFPlone.interfaces import ISecuritySchema
@@ -29,9 +31,13 @@ class TestUsersEndpoint(unittest.TestCase):
         self.portal_url = self.portal.absolute_url()
         setRoles(self.portal, TEST_USER_ID, ['Manager'])
 
+        self.mailhost = getUtility(IMailHost)
+
         self.api_session = RelativeSession(self.portal_url)
         self.api_session.headers.update({'Accept': 'application/json'})
         self.api_session.auth = (SITE_OWNER_NAME, SITE_OWNER_PASSWORD)
+        self.anon_api_session = RelativeSession(self.portal_url)
+        self.anon_api_session.headers.update({'Accept': 'application/json'})
 
         properties = {
             'email': 'noam.chomsky@example.com',
@@ -97,7 +103,7 @@ class TestUsersEndpoint(unittest.TestCase):
         transaction.commit()
 
         self.assertEqual(400, response.status_code)
-        self.assertTrue('"Property \'username\' is required' in response.text)
+        self.assertTrue('Property \'username\' is required' in response.text)
 
     def test_add_user_password_is_required(self):
         response = self.api_session.post(
@@ -109,7 +115,9 @@ class TestUsersEndpoint(unittest.TestCase):
         transaction.commit()
 
         self.assertEqual(400, response.status_code)
-        self.assertTrue('"Property \'password\' is required' in response.text)
+        self.assertTrue(
+            ('You have to either send a '
+             'password or sendPasswordReset') in response.text)
 
     def test_add_user_email_is_required_if_email_login_is_enabled(self):
         # enable use_email_as_login
@@ -125,7 +133,8 @@ class TestUsersEndpoint(unittest.TestCase):
         )
 
         self.assertEqual(400, response.status_code)
-        self.assertTrue('"Property \'email\' is required' in response.text)
+        self.assertTrue('Property \'username\' is not allowed' in
+                        response.text)
 
     def test_add_user_email_with_email_login_enabled(self):
         # enable use_email_as_login
@@ -144,7 +153,7 @@ class TestUsersEndpoint(unittest.TestCase):
         self.assertEqual(201, response.status_code)
         self.assertTrue(api.user.get(userid='howard.zinn@example.com'))
 
-    def test_add_user_with_email_login_enabled(self):
+    def test_username_is_not_allowed_with_email_login_enabled(self):
         # enable use_email_as_login
         security_settings = getAdapter(self.portal, ISecuritySchema)
         security_settings.use_email_as_login = True
@@ -159,11 +168,44 @@ class TestUsersEndpoint(unittest.TestCase):
         )
         transaction.commit()
 
+        self.assertEqual(400, response.status_code)
+        self.assertTrue('Property \'username\' is not allowed'
+                        in response.text)
+
+    def test_add_user_with_email_login_enabled(self):
+        # enable use_email_as_login
+        security_settings = getAdapter(self.portal, ISecuritySchema)
+        security_settings.use_email_as_login = True
+        transaction.commit()
+        response = self.api_session.post(
+            '/@users',
+            json={
+                "email": "howard.zinn@example.com",
+                "password": "secret"
+            },
+        )
+        transaction.commit()
+
         self.assertEqual(201, response.status_code)
         user = api.user.get(userid='howard.zinn@example.com')
         self.assertTrue(user)
         self.assertEqual('howard.zinn@example.com', user.getUserName())
         self.assertEqual('howard.zinn@example.com', user.getProperty('email'))
+
+    def test_add_user_with_sendPasswordRest_sends_email(self):
+        response = self.api_session.post(
+            '/@users',
+            json={
+                "username": "howard",
+                "email": "howard.zinn@example.com",
+                "sendPasswordReset": True
+            },
+        )
+        transaction.commit()
+
+        self.assertEqual(201, response.status_code)
+        self.assertTrue('To: howard.zinn@example.com' in
+                        self.mailhost.messages[0])
 
     def test_get_user(self):
         response = self.api_session.get('/@users/noam')
@@ -332,3 +374,103 @@ class TestUsersEndpoint(unittest.TestCase):
         transaction.commit()
 
         self.assertEqual(response.status_code, 404)
+
+    def test_anonymous_requires_enable_self_reg(self):
+        security_settings = getAdapter(self.portal, ISecuritySchema)
+        security_settings.enable_self_reg = False
+        transaction.commit()
+
+        response = self.anon_api_session.post(
+            '/@users',
+            json={
+                "password": "noamchomsky"
+            },
+        )
+        transaction.commit()
+
+        self.assertEqual(400, response.status_code)
+
+        security_settings.enable_self_reg = True
+        transaction.commit()
+
+        response = self.anon_api_session.post(
+            '/@users',
+            json={
+                "username": "new_user",
+                'email': 'avram.chomsky@example.com'
+            },
+        )
+        transaction.commit()
+
+        self.assertEqual(201, response.status_code)
+
+    def test_anonymous_without_enable_user_pwd_choice_sends_mail(self):
+        security_settings = getAdapter(self.portal, ISecuritySchema)
+        security_settings.enable_self_reg = True
+        transaction.commit()
+
+        response = self.anon_api_session.post(
+            '/@users',
+            json={
+                "username": "new_user",
+                'email': 'avram.chomsky@example.com'
+            },
+        )
+        transaction.commit()
+
+        self.assertEqual(201, response.status_code)
+        self.assertTrue('To: avram.chomsky@example.com' in
+                        self.mailhost.messages[0])
+
+    def test_anonymous_can_set_password_with_enable_user_pwd_choice(self):
+        security_settings = getAdapter(self.portal, ISecuritySchema)
+        security_settings.enable_self_reg = True
+        transaction.commit()
+
+        response = self.anon_api_session.post(
+            '/@users',
+            json={
+                "username": "new_user",
+                'email': 'avram.chomsky@example.com',
+                'password': 'secret'
+            },
+        )
+        transaction.commit()
+
+        self.assertEqual(400, response.status_code)
+        self.assertTrue('Property \'password\' is not allowed'
+                        in response.text)
+
+        security_settings.enable_user_pwd_choice = True
+        transaction.commit()
+
+        response = self.anon_api_session.post(
+            '/@users',
+            json={
+                "username": "new_user",
+                'email': 'avram.chomsky@example.com',
+                'password': 'secret'
+            },
+        )
+        transaction.commit()
+
+        self.assertEqual(201, response.status_code)
+
+    def test_anonymous_with_enable_user_pwd_choice_doent_send_email(self):
+        security_settings = getAdapter(self.portal, ISecuritySchema)
+        security_settings.enable_self_reg = True
+        security_settings.enable_user_pwd_choice = True
+        transaction.commit()
+
+        response = self.anon_api_session.post(
+            '/@users',
+            json={
+                "username": "new_user",
+                'email': 'avram.chomsky@example.com',
+                'password': 'secret'
+            },
+        )
+        transaction.commit()
+
+        self.assertEqual(self.mailhost.messages, [])
+        self.assertEqual(201, response.status_code)
