@@ -11,8 +11,6 @@ from zope.component import queryMultiAdapter
 from zope.component.hooks import getSite
 from zope.interface import implements
 from zope.publisher.interfaces import IPublishTraverse
-from zExceptions import BadRequest
-from zExceptions import BadRequest
 from zope.interface import alsoProvides
 
 import plone.protect.interfaces
