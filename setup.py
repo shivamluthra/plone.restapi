@@ -1,6 +1,6 @@
 from setuptools import setup, find_packages
 
-version = '1.0a9.dev0'
+version = '1.0a10.dev0'
 
 long_description = (
     open('README.rst').read() + '\n' +
@@ -45,6 +45,7 @@ setup(name='plone.restapi',
       ],
       extras_require={'test': [
           'Products.Archetypes',
+          'collective.MockMailHost',
           'plone.app.collection',
           'plone.app.contenttypes',
           'plone.app.robotframework',

@@ -107,13 +107,15 @@ class TestATContentSerializer(unittest.TestCase):
             '@id': 'http://nohost/plone/folder/subfolder',
             '@type': 'ATTestFolder',
             'description': '',
-            'title': u'Subfolder'},
+            'title': u'Subfolder',
+            'review_state': 'private'},
             obj['items'][0])
         self.assertDictEqual({
             '@id': 'http://nohost/plone/folder/doc',
             '@type': 'ATTestDocument',
             'description': '',
-            'title': u'A Document'},
+            'title': u'A Document',
+            'review_state': 'private'},
             obj['items'][1])
 
     def test_serializer_includes_expansion(self):
@@ -147,11 +149,13 @@ class TestATContentSerializer(unittest.TestCase):
                     '@type': 'ATTestDocument',
                     'description': '',
                     'title': u'Second doc',
+                    'review_state': 'private'
                 },
                 {
                     '@id': 'http://nohost/plone/folder/doc1',
                     '@type': 'ATTestDocument',
                     'description': '',
                     'title': u'A Document',
+                    'review_state': 'private'
                 },
             ])
