@@ -693,3 +693,9 @@ class TestTraversal(unittest.TestCase):
             json=payload
         )
         save_request_and_response_for_docs('sharing_folder_post', response)
+
+    def test_documentation_expansion(self):
+        response = self.api_session.get(
+            '/front-page?expand=breadcrumbs,workflow'
+        )
+        save_request_and_response_for_docs('expansion', response)
