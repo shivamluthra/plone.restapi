@@ -7,34 +7,38 @@ Changelog
 New Features:
 
 - Add @sharing endpoint.
-  [timo,csenger]
-
-- Add @vocabularies endpoint.
-  https://github.com/plone/plone.restapi/issues/212
   [timo,csenger,sneridagh]
 
-- Implement @copy and @move endpoints.
+- Add @vocabularies endpoint.
+  [timo,csenger,sneridagh]
+
+- Add @copy and @move endpoints.
   [buchi]
 
 - Docs: Use sphinxcontrib-httpexample and convert existing examples.
   [lgraf]
 
-- Added 'addable' to @types endpoint. It specifies if the content type can be
-  added to the current context. See https://github.com/plone/plone.restapi/issues/173
+- Add 'addable' attribute to the @types endpoint. It specifies if the content
+  type can be added to the current context. See
+  https://github.com/plone/plone.restapi/issues/173.
   [jaroel]
 
-- Added support for named IJsonSchemaProvider adapter to target a single
+- Add support for named IJsonSchemaProvider adapter to target a single
   field in a schema. This allows us to prevent rendering all choices in
-  relatedItems. See https://github.com/plone/plone.restapi/issues/199
+  relatedItems. See https://github.com/plone/plone.restapi/issues/199.
   [jaroel]
 
 - Add review_state to the folderish summary serializer.
   [sneridagh]
 
-- Add new @principals endpoint. It searches for principals and returns a list
-  of users and groups that matches the query. This is aimed to be used in the
+- Add @principals endpoint. It searches for principals and returns a list of
+  users and groups that matches the query. This is aimed to be used in the
   sharing UI widget or other user/groups search widgets.
   [sneridagh]
+
+- Add reset-password action to the user endpoint.
+  https://github.com/plone/plone.restapi/issues/158
+  [timo,csenger]
 
 Bugfixes:
 
@@ -53,16 +57,16 @@ Bugfixes:
   fields in correct order and in their appropriate fieldsets.
   [lgraf]
 
-- Add missing id to the Plone site serialization, related to issue #186
+- Add missing id to the Plone site serialization, related to issue #186.
   [sneridagh]
 
 - Add missing adapter for IBytes on JSONFieldSchema generator. This fixes the
   broken /@types/Image and /@types/File endpoints.
   [sneridagh]
 
-- Add reset-password action to the user endpoint.
-  https://github.com/plone/plone.restapi/issues/158
-  [timo,csenger]
+- Fix addable types for member users and roles assigned locally on @types
+  endpoint.
+  [sneridagh]
 
 
 1.0a9 (2017-03-03)
